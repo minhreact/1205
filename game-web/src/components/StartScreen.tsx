@@ -35,15 +35,20 @@ const StartScreen: FC = () => {
           fontSize: 32,
           width: 64,
           height: 64,
+          lineHeight: "64px",
           borderRadius: "50%",
           border: "none",
           cursor: "pointer",
           background: "#ff6b81",
           color: "#fff",
           boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 0,
         }}
       >
-        &gt;
+        →
       </button>
     </div>
   );

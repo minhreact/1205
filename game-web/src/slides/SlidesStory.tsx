@@ -55,7 +55,7 @@ const SlidesStory: FC = () => {
             textShadow: "0 4px 20px rgba(0,0,0,0.3)",
           }}
         >
-          🌸 Câu chuyện bắt đầu
+          Chào Quế
         </h1>
         <p
           style={{
@@ -66,8 +66,7 @@ const SlidesStory: FC = () => {
             lineHeight: "1.6",
           }}
         >
-          Trong một khu vườn xinh đẹp, những bông hoa đang chờ đợi được yêu
-          thương...
+          Anh có một vài điều muốn nói với em ...
         </p>
         <div
           style={{
@@ -91,25 +90,6 @@ const SlidesStory: FC = () => {
           flexDirection: "column",
         }}
       >
-        <div
-          style={{
-            fontSize: "120px",
-            marginBottom: "30px",
-          }}
-        >
-          💐
-        </div>
-        <h2
-          style={{
-            fontSize: "48px",
-            color: "white",
-            marginBottom: "20px",
-            textAlign: "center",
-            fontWeight: "bold",
-          }}
-        >
-          Bạn đã thu thập được 8 bông hoa
-        </h2>
         <p
           style={{
             fontSize: "20px",
@@ -119,8 +99,8 @@ const SlidesStory: FC = () => {
             lineHeight: "1.6",
           }}
         >
-          Mỗi bông hoa đại diện cho một kỷ niệm đẹp, một khoảnh khắc đáng nhớ
-          trong cuộc đời.
+          Anh, là một người chưa được bình thường đang trên con đường tìm kiếm
+          một cuộc sống bình thường dành cho anh
         </p>
       </div>
 
@@ -163,8 +143,8 @@ const SlidesStory: FC = () => {
             lineHeight: "1.6",
           }}
         >
-          Hồng đại diện cho tình yêu, vàng cho niềm vui, tím cho sự lãng mạn.
-          Tất cả hòa quyện thành một bó hoa tuyệt đẹp.
+          Thật tình cờ, trên con đường đó, hai ta lại găp nhau, cùng nhau tạo
+          nên những kỷ niệm đẹp.
         </p>
       </div>
 
@@ -207,8 +187,136 @@ const SlidesStory: FC = () => {
             lineHeight: "1.6",
           }}
         >
-          Khi những bông hoa được chăm sóc với tình yêu thương, chúng sẽ nở rộ
-          và lan tỏa hạnh phúc đến mọi người xung quanh.
+          Một cô gái luôn yêu đời, xinh đẹp, đáng yêu. Người dám rủ anh, một
+          người xa lạ lên một chuyến tàu di sản.
+        </p>
+      </div>
+
+      {/* Slide 4 */}
+      <div
+        className="section"
+        style={{
+          background: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "120px",
+            marginBottom: "30px",
+          }}
+        >
+          ✨
+        </div>
+        <h2
+          style={{
+            fontSize: "48px",
+            color: "white",
+            marginBottom: "20px",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          Điều kỳ diệu
+        </h2>
+        <p
+          style={{
+            fontSize: "20px",
+            color: "rgba(255,255,255,0.9)",
+            maxWidth: "600px",
+            textAlign: "center",
+            lineHeight: "1.6",
+          }}
+        >
+          Một cô gái để lại ấn tượng sâu sắc cho anh về sự thật thà nhí nhảnh.
+        </p>
+      </div>
+      {/* Slide 4 */}
+      <div
+        className="section"
+        style={{
+          background: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "120px",
+            marginBottom: "30px",
+          }}
+        >
+          ✨
+        </div>
+        <h2
+          style={{
+            fontSize: "48px",
+            color: "white",
+            marginBottom: "20px",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          Điều kỳ diệu
+        </h2>
+        <p
+          style={{
+            fontSize: "20px",
+            color: "rgba(255,255,255,0.9)",
+            maxWidth: "600px",
+            textAlign: "center",
+            lineHeight: "1.6",
+          }}
+        >
+          Một cô gái khiến anh cười mỗi khi nhớ về.
+        </p>
+      </div>
+      {/* Slide 4 */}
+      <div
+        className="section"
+        style={{
+          background: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "120px",
+            marginBottom: "30px",
+          }}
+        >
+          ✨
+        </div>
+        <h2
+          style={{
+            fontSize: "48px",
+            color: "white",
+            marginBottom: "20px",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          Điều kỳ diệu
+        </h2>
+        <p
+          style={{
+            fontSize: "20px",
+            color: "rgba(255,255,255,0.9)",
+            maxWidth: "600px",
+            textAlign: "center",
+            lineHeight: "1.6",
+          }}
+        >
+          Khiến cho một người chưa được bình thường như anh cảm nhận được sự
+          bình thường trong tình yêu đôi lứa
         </p>
       </div>
 
@@ -240,7 +348,7 @@ const SlidesStory: FC = () => {
             fontWeight: "bold",
           }}
         >
-          Kết thúc có hậu
+          Kết thúc
         </h2>
         <p
           style={{
@@ -252,11 +360,49 @@ const SlidesStory: FC = () => {
             marginBottom: "40px",
           }}
         >
-          Và họ sống hạnh phúc mãi mãi với vườn hoa xinh đẹp của mình... 💝
+          Vậy nên anh có một câu hỏi rất cần em trả lời...
         </p>
-        <button onClick={goToForm} className="replay-button">
+        <button
+          onClick={goToForm}
+          style={{
+            padding: "12px 20px",
+            fontSize: "24px",
+            fontWeight: "bold",
+            background: "linear-gradient(135deg, #FF69B4, #FF1493)",
+            color: "white",
+            border: "none",
+            borderRadius: "50px",
+            cursor: "pointer",
+            boxShadow: "0 8px 20px rgba(255, 20, 147, 0.4)",
+            transition: "all 0.3s ease",
+          }}
+        >
           Tiếp tục →
         </button>
+      </div>
+
+      <div
+        className="section"
+        style={{
+          background: "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <p
+          style={{
+            fontSize: "20px",
+            color: "rgba(255,255,255,0.9)",
+            maxWidth: "600px",
+            textAlign: "center",
+            lineHeight: "1.6",
+            marginBottom: "40px",
+          }}
+        >
+          ...
+        </p>
       </div>
     </div>
   );

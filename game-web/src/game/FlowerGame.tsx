@@ -459,9 +459,9 @@ const FlowerGame: FC = () => {
 
         // Thêm text "💐"
         const text = new PIXI.Text({
-          text: "🎉 Hoàn thành! 🎉",
+          text: "🎉 Tặng em, bông hoa mà em đã tự chọn :v 🎉",
           style: {
-            fontSize: 42,
+            fontSize: 16,
             fill: 0xff69b4,
             fontWeight: "bold",
             stroke: { color: 0xffffff, width: 5 },
@@ -586,8 +586,9 @@ const FlowerGame: FC = () => {
           style={{
             position: "fixed",
             bottom: "50px",
-            right: "50px",
-            padding: "20px 40px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "12px 20px",
             fontSize: "24px",
             fontWeight: "bold",
             background: "linear-gradient(135deg, #FF69B4, #FF1493)",

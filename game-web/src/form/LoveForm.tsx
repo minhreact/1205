@@ -11,6 +11,7 @@ const LoveForm: FC = () => {
     top: number;
     left: number;
   } | null>(null);
+
   const [showSuccess, setShowSuccess] = useState(false);
   const yesButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -96,41 +97,6 @@ const LoveForm: FC = () => {
         >
           Yayyy! 🎉
         </h1>
-        <p
-          style={{
-            fontSize: "24px",
-            color: "rgba(255,255,255,0.9)",
-            textAlign: "center",
-            maxWidth: "600px",
-            lineHeight: "1.6",
-          }}
-        >
-          Anh rất hạnh phúc! Cảm ơn em đã đồng ý làm người yêu anh 💕
-        </p>
-        <button
-          onClick={() => window.location.reload()}
-          style={{
-            marginTop: "40px",
-            padding: "15px 40px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            background: "white",
-            color: "#667eea",
-            border: "none",
-            borderRadius: "50px",
-            cursor: "pointer",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
-            transition: "all 0.3s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "scale(1.1)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
-          }}
-        >
-          🔄 Chơi lại
-        </button>
       </div>
     );
   }
@@ -171,8 +137,8 @@ const LoveForm: FC = () => {
           textShadow: "0 4px 20px rgba(0,0,0,0.3)",
         }}
       >
-        Trong một ngày bình thường này, em có muốn làm nó trở nên đặc biệt hay
-        không?
+        Trong một ngày bình thường như này, em có muốn làm nó trở nên đặc biệt
+        hơn không?
       </h1>
       <p
         style={{
@@ -201,26 +167,30 @@ const LoveForm: FC = () => {
             ref={yesButtonRef}
             onClick={handleYesClick}
             style={{
-              padding: "20px 60px",
-              fontSize: "28px",
-              fontWeight: "bold",
+              padding: "12px 20px",
+              fontSize: "24px",
+              fontWeight: "700",
               background: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
               color: "white",
-              border: "none",
-              borderRadius: "50px",
+              border: "3px solid rgba(255,255,255,0.12)",
+              borderRadius: "20px",
               cursor: "pointer",
-              boxShadow: "0 8px 30px rgba(67, 233, 123, 0.4)",
-              transition: "all 0.3s ease",
+              boxShadow:
+                "0 12px 40px rgba(67, 233, 123, 0.45), 0 6px 20px rgba(0,0,0,0.12)",
+              transition:
+                "transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.1)";
+              e.currentTarget.style.transform = "scale(1.08)";
               e.currentTarget.style.boxShadow =
-                "0 12px 40px rgba(67, 233, 123, 0.6)";
+                "0 18px 60px rgba(67, 233, 123, 0.6), 0 8px 30px rgba(0,0,0,0.12)";
+              e.currentTarget.style.filter = "brightness(1.03)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "scale(1)";
               e.currentTarget.style.boxShadow =
-                "0 8px 30px rgba(67, 233, 123, 0.4)";
+                "0 12px 40px rgba(67, 233, 123, 0.45), 0 6px 20px rgba(0,0,0,0.12)";
+              e.currentTarget.style.filter = "brightness(1)";
             }}
           >
             Đồng ý
@@ -229,13 +199,13 @@ const LoveForm: FC = () => {
           <button
             onClick={handleNoClick}
             style={{
-              padding: "20px 60px",
-              fontSize: "28px",
-              fontWeight: "bold",
+              padding: "12px 20px",
+              fontSize: "24px",
+              fontWeight: "700",
               background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
               color: "white",
               border: "none",
-              borderRadius: "50px",
+              borderRadius: "20px",
               cursor: "pointer",
               boxShadow: "0 8px 30px rgba(245, 87, 108, 0.4)",
               transition: "all 0.3s ease",
@@ -256,75 +226,85 @@ const LoveForm: FC = () => {
         </div>
       ) : (
         // After clicking No: Moving buttons
-        <div style={{ position: "relative", width: "100%", height: "400px" }}>
+        <div style={{ position: "relative", width: "100%", height: "200px" }}>
           {/* Yes Button - Fixed at original position */}
           <button
             ref={yesButtonRef}
             onClick={handleYesClick}
             style={{
-              position: "absolute",
-              top: yesButtonPosition ? `${yesButtonPosition.top}%` : "50%",
-              left: yesButtonPosition ? `${yesButtonPosition.left}%` : "50%",
+              // Use fixed positioning so the button stays at the same viewport
+              // coordinates when the layout switches after clicking "Khum"
+              position: "fixed",
+              top: yesButtonPosition ? `${yesButtonPosition.top}%` : "40%",
+              left: noButtonPosition
+                ? "50%"
+                : yesButtonPosition
+                ? `${yesButtonPosition.left}%`
+                : "40%",
               transform: "translate(-50%, -50%)",
-              padding: "20px 60px",
-              fontSize: "28px",
-              fontWeight: "bold",
+              padding: "12px 20px",
+              fontSize: "24px",
+              fontWeight: "700",
               background: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
               color: "white",
-              border: "none",
-              borderRadius: "50px",
+              border: "3px solid rgba(255,255,255,0.12)",
+              borderRadius: "20px",
               cursor: "pointer",
-              boxShadow: "0 8px 30px rgba(67, 233, 123, 0.4)",
-              transition: "all 0.3s ease",
-              zIndex: 10,
+              transition:
+                "transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease",
+              zIndex: 999,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform =
-                "translate(-50%, -50%) scale(1.1)";
+                "translate(-50%, -50%) scale(1.08)";
               e.currentTarget.style.boxShadow =
-                "0 12px 40px rgba(67, 233, 123, 0.6)";
+                "0 18px 60px rgba(67, 233, 123, 0.6), 0 8px 30px rgba(0,0,0,0.12)";
+              e.currentTarget.style.filter = "brightness(1.03)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform =
                 "translate(-50%, -50%) scale(1)";
               e.currentTarget.style.boxShadow =
-                "0 8px 30px rgba(67, 233, 123, 0.4)";
+                "0 12px 40px rgba(67, 233, 123, 0.45), 0 6px 20px rgba(0,0,0,0.15)";
+              e.currentTarget.style.filter = "brightness(1)";
             }}
           >
             Đồng ý
           </button>
 
           {/* No Button - Moving position */}
+
           <button
             onClick={handleNoClick}
             style={{
-              position: "absolute",
+              // Use fixed positioning so both buttons use the same viewport coords
+              position: "fixed",
               top: `${noButtonPosition.top}%`,
               left: `${noButtonPosition.left}%`,
               transform: "translate(-50%, -50%)",
-              padding: "20px 60px",
-              fontSize: "28px",
-              fontWeight: "bold",
+              padding: "12px 20px",
+              fontSize: "24px",
+              fontWeight: "700",
               background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
               color: "white",
               border: "none",
-              borderRadius: "50px",
+              borderRadius: "20px",
               cursor: "pointer",
-              boxShadow: "0 8px 30px rgba(245, 87, 108, 0.4)",
-              transition: "all 0.3s ease",
+              boxShadow: "0 10px 34px rgba(245, 87, 108, 0.45)",
+              transition: "transform 0.25s ease, box-shadow 0.25s ease",
               zIndex: 5,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform =
-                "translate(-50%, -50%) scale(1.1)";
+                "translate(-50%, -50%) scale(1.08)";
               e.currentTarget.style.boxShadow =
-                "0 12px 40px rgba(245, 87, 108, 0.6)";
+                "0 16px 50px rgba(245, 87, 108, 0.6)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform =
                 "translate(-50%, -50%) scale(1)";
               e.currentTarget.style.boxShadow =
-                "0 8px 30px rgba(245, 87, 108, 0.4)";
+                "0 10px 34px rgba(245, 87, 108, 0.45)";
             }}
           >
             Khum
