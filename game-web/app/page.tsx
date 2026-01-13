@@ -9,6 +9,14 @@ const FlowerGame = dynamic(() => import("../src/game/FlowerGame"), {
   ssr: false,
 });
 
+const SlidesStory = dynamic(() => import("../src/slides/SlidesStory"), {
+  ssr: false,
+});
+
+const LoveForm = dynamic(() => import("../src/form/LoveForm"), {
+  ssr: false,
+});
+
 const Page: FC = () => {
   const step = useFlowStore((state) => state.step);
 
@@ -16,6 +24,8 @@ const Page: FC = () => {
     <>
       {step === "start" && <StartScreen />}
       {step === "game" && <FlowerGame />}
+      {step === "slides" && <SlidesStory />}
+      {step === "form" && <LoveForm />}
     </>
   );
 };

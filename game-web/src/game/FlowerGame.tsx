@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import * as PIXI from "pixi.js";
 import { Howl } from "howler";
 import { useFlowStore } from "../stores/flow.store";
@@ -75,17 +75,20 @@ const createFlowerGraphics = (colorIndex: number): PIXI.Container => {
 const FlowerGame: FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const collectedRef = useRef<number>(0);
-  const collectedFlowersRef = useRef<PIXI.Container[]>([]);
-  const complete = useFlowStore((state) => state.complete);
+  const collectedFlowerColorsRef = useRef<number[]>([]); // Lưu màu hoa thay vì container
+  const [showContinueButton, setShowContinueButton] = useState(false);
+  const goToSlides = useFlowStore((state) => state.goToSlides);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     // Reset collected count on mount
     collectedRef.current = 0;
-    collectedFlowersRef.current = [];
+    collectedFlowerColorsRef.current = [];
 
     let intervalId: number | undefined;
+    let confettiIntervalId: number | undefined;
+    let fireworkIntervalId: number | undefined;
     let bgm: Howl | undefined;
     let app: PIXI.Application | undefined;
     let mounted = true;
@@ -126,18 +129,6 @@ const FlowerGame: FC = () => {
       const centerX: number = app.screen.width / 2;
       const centerY: number = app.screen.height / 2;
 
-      // Vị trí cho bó hoa (8 bông)
-      const bouquetPositions = [
-        { x: centerX, y: centerY - 60 },
-        { x: centerX - 45, y: centerY - 35 },
-        { x: centerX + 45, y: centerY - 35 },
-        { x: centerX - 65, y: centerY - 5 },
-        { x: centerX + 65, y: centerY - 5 },
-        { x: centerX - 45, y: centerY + 25 },
-        { x: centerX + 45, y: centerY + 25 },
-        { x: centerX, y: centerY + 45 },
-      ];
-
       // Thêm counter hiển thị số hoa đã thu thập
       const counterText = new PIXI.Text({
         text: "🌸 Đã thu thập: 0/8",
@@ -157,14 +148,18 @@ const FlowerGame: FC = () => {
       };
 
       const createFlower = (): void => {
-        // Tạo container cho bông hoa
-        const flowerContainer = new PIXI.Container();
+        // Tạo container cho bông hoa với custom property
+        const flowerContainer = new PIXI.Container() as PIXI.Container & {
+          colorIndex: number;
+        };
 
-        // Tạo hình hoa với màu ngẫu nhiên
-        const flowerGraphics = createFlowerGraphics(
-          Math.floor(Math.random() * FLOWER_COLORS.length)
-        );
+        // Tạo hình hoa với màu ngẫu nhiên và lưu colorIndex
+        const colorIndex = Math.floor(Math.random() * FLOWER_COLORS.length);
+        const flowerGraphics = createFlowerGraphics(colorIndex);
         flowerContainer.addChild(flowerGraphics);
+
+        // Lưu colorIndex vào container để dùng sau
+        flowerContainer.colorIndex = colorIndex;
 
         flowerContainer.x = Math.random() * app!.screen.width;
         flowerContainer.y = -80;
@@ -191,67 +186,37 @@ const FlowerGame: FC = () => {
           flowerContainer.eventMode = "none";
           app!.ticker.remove(update);
 
-          // Lưu lại bông hoa đã thu thập
-          const flowerIndex = collectedRef.current;
-          collectedFlowersRef.current.push(flowerContainer);
+          // Lưu màu sắc hoa đã thu thập để hiển thị sau
+          collectedFlowerColorsRef.current.push(flowerContainer.colorIndex);
           collectedRef.current += 1;
           updateCounter();
 
-          // Vị trí đích trong bó hoa
-          const targetPos = bouquetPositions[flowerIndex];
-          const targetScale = 1.0;
+          // Hiệu ứng hoa biến mất với animation
+          let fadeTime = 0;
+          const fadeOut = (): void => {
+            fadeTime++;
+            flowerContainer.alpha = 1 - fadeTime / 15;
+            flowerContainer.scale.x *= 1.05;
+            flowerContainer.scale.y *= 1.05;
+            flowerContainer.rotation += 0.1;
 
-          let arrived = false;
-          const flyToBouquet = (): void => {
-            flowerContainer.x += (targetPos.x - flowerContainer.x) * 0.12;
-            flowerContainer.y += (targetPos.y - flowerContainer.y) * 0.12;
-            flowerContainer.scale.x +=
-              (targetScale - flowerContainer.scale.x) * 0.1;
-            flowerContainer.scale.y +=
-              (targetScale - flowerContainer.scale.y) * 0.1;
-
-            // Giảm tốc độ xoay khi bay về
-            flowerContainer.rotation *= 0.95;
-
-            // Check if arrived
-            const distance = Math.sqrt(
-              Math.pow(targetPos.x - flowerContainer.x, 2) +
-                Math.pow(targetPos.y - flowerContainer.y, 2)
-            );
-
-            if (distance < 1 && !arrived) {
-              arrived = true;
-              flowerContainer.x = targetPos.x;
-              flowerContainer.y = targetPos.y;
-              flowerContainer.rotation = 0;
-
-              // Hiệu ứng "bật" khi đến vị trí
-              let bounceTime = 0;
-              const bounce = (): void => {
-                bounceTime++;
-                const bounceScale =
-                  1 + Math.sin(bounceTime * 0.3) * 0.1 * (1 - bounceTime / 20);
-                flowerContainer.scale.set(targetScale * bounceScale);
-
-                if (bounceTime >= 20) {
-                  flowerContainer.scale.set(targetScale);
-                  app!.ticker.remove(bounce);
-                }
-              };
-              app!.ticker.add(bounce);
-
-              app!.ticker.remove(flyToBouquet);
+            if (fadeTime >= 15) {
+              app!.stage.removeChild(flowerContainer);
+              app!.ticker.remove(fadeOut);
             }
           };
-
-          app!.ticker.add(flyToBouquet);
+          app!.ticker.add(fadeOut);
 
           // Khi đủ 8 bông, hiển thị bó hoa hoàn chỉnh
           if (collectedRef.current === 8) {
             setTimeout(() => {
               showBouquet();
               if (bgm) bgm.fade(0.5, 0, 1500);
-            }, 1500);
+              // Hiện nút sau 3 giây
+              setTimeout(() => {
+                setShowContinueButton(true);
+              }, 3000);
+            }, 1000);
           }
         });
 
@@ -261,6 +226,8 @@ const FlowerGame: FC = () => {
 
       // Tạo hiệu ứng pháo hoa đẹp hơn
       const createFirework = (x: number, y: number): void => {
+        if (!app) return;
+
         const particleCount = 40;
         const colors = [
           0xff69b4, 0xffd700, 0xff1493, 0xffa500, 0x9370db, 0xff6347, 0xffb6c1,
@@ -296,10 +263,12 @@ const FlowerGame: FC = () => {
           const vy = Math.sin(angle) * speed - 1; // Hướng lên trên một chút
           let ay = 0.1; // Gravity
 
-          app!.stage.addChild(particle);
+          app.stage.addChild(particle);
 
           let life = 80;
           const updateParticle = (): void => {
+            if (!app) return;
+
             particle.x += vx;
             particle.y += vy + ay;
             ay += 0.05; // Tăng gravity
@@ -311,12 +280,12 @@ const FlowerGame: FC = () => {
             life--;
 
             if (life <= 0) {
-              app!.stage.removeChild(particle);
-              app!.ticker.remove(updateParticle);
+              app.stage.removeChild(particle);
+              app.ticker.remove(updateParticle);
             }
           };
 
-          app!.ticker.add(updateParticle);
+          app.ticker.add(updateParticle);
         }
 
         // Thêm trail effect ở giữa
@@ -325,30 +294,27 @@ const FlowerGame: FC = () => {
         centerBurst.fill({ color: mainColor, alpha: 0.8 });
         centerBurst.x = x;
         centerBurst.y = y;
-        app!.stage.addChild(centerBurst);
+        app.stage.addChild(centerBurst);
 
         let burstLife = 20;
         const updateBurst = (): void => {
+          if (!app) return;
+
           centerBurst.scale.set((20 - burstLife) * 0.5);
           centerBurst.alpha = burstLife / 20;
           burstLife--;
 
           if (burstLife <= 0) {
-            app!.stage.removeChild(centerBurst);
-            app!.ticker.remove(updateBurst);
+            app.stage.removeChild(centerBurst);
+            app.ticker.remove(updateBurst);
           }
         };
-        app!.ticker.add(updateBurst);
+        app.ticker.add(updateBurst);
       };
 
       const showBouquet = (): void => {
-        // Xóa counter và các hoa đang rơi (chỉ giữ lại 8 hoa đã thu thập)
-        const childrenToRemove = [...app!.stage.children];
-        childrenToRemove.forEach((child) => {
-          if (!collectedFlowersRef.current.includes(child as PIXI.Container)) {
-            app!.stage.removeChild(child);
-          }
-        });
+        // Xóa tất cả (counter và các hoa đang rơi)
+        app!.stage.removeChildren();
 
         // Dừng tạo hoa mới
         if (intervalId) window.clearInterval(intervalId);
@@ -397,6 +363,21 @@ const FlowerGame: FC = () => {
           stems.addChild(leaf2);
         });
         bouquetContainer.addChild(stems);
+
+        // Tạo lại 8 bông hoa đã thu thập và đặt vào bó
+        collectedFlowerColorsRef.current.forEach((colorIndex, index) => {
+          if (index < 8) {
+            // Tạo hoa mới với màu đã lưu
+            const newFlower = createFlowerGraphics(colorIndex);
+
+            const pos = stemPositions[index];
+            newFlower.x = pos.x;
+            newFlower.y = pos.y;
+            newFlower.scale.set(1.0);
+
+            bouquetContainer.addChild(newFlower);
+          }
+        });
 
         // Vẽ giấy gói (wrapper) - đẹp hơn với nhiều chi tiết
         const wrapper = new PIXI.Graphics();
@@ -505,11 +486,13 @@ const FlowerGame: FC = () => {
         // Tạo pháo hoa liên tục
         let fireworkCount = 0;
         const maxFireworks = 20;
-        const fireworkInterval = setInterval(() => {
+        fireworkIntervalId = window.setInterval(() => {
           if (fireworkCount >= maxFireworks) {
-            clearInterval(fireworkInterval);
+            if (fireworkIntervalId) clearInterval(fireworkIntervalId);
             return;
           }
+
+          if (!app) return;
 
           const x = centerX + (Math.random() - 0.5) * 500;
           const y = centerY + (Math.random() - 0.5) * 400;
@@ -520,6 +503,8 @@ const FlowerGame: FC = () => {
 
         // Thêm confetti rơi xuống
         const createConfetti = (): void => {
+          if (!app) return;
+
           const confetti = new PIXI.Graphics();
           const colors = [0xff69b4, 0xffd700, 0xff1493, 0xffa500, 0x9370db];
           const color = colors[Math.floor(Math.random() * colors.length)];
@@ -528,7 +513,7 @@ const FlowerGame: FC = () => {
           confetti.rect(-4, -8, 8, 16);
           confetti.fill(color);
 
-          confetti.x = Math.random() * app!.screen.width;
+          confetti.x = Math.random() * app.screen.width;
           confetti.y = -20;
           confetti.rotation = Math.random() * Math.PI * 2;
 
@@ -536,27 +521,29 @@ const FlowerGame: FC = () => {
           const vy = 2 + Math.random() * 2;
           const rotationSpeed = (Math.random() - 0.5) * 0.2;
 
-          app!.stage.addChild(confetti);
+          app.stage.addChild(confetti);
 
           const updateConfetti = (): void => {
+            if (!app) return;
+
             confetti.x += vx;
             confetti.y += vy;
             confetti.rotation += rotationSpeed;
 
-            if (confetti.y > app!.screen.height + 20) {
-              app!.stage.removeChild(confetti);
-              app!.ticker.remove(updateConfetti);
+            if (confetti.y > app.screen.height + 20) {
+              app.stage.removeChild(confetti);
+              app.ticker.remove(updateConfetti);
             }
           };
 
-          app!.ticker.add(updateConfetti);
+          app.ticker.add(updateConfetti);
         };
 
         // Tạo confetti liên tục trong 5 giây
         let confettiCount = 0;
-        const confettiInterval = setInterval(() => {
+        confettiIntervalId = window.setInterval(() => {
           if (confettiCount >= 50) {
-            clearInterval(confettiInterval);
+            if (confettiIntervalId) clearInterval(confettiIntervalId);
             return;
           }
 
@@ -574,14 +561,15 @@ const FlowerGame: FC = () => {
     return () => {
       mounted = false;
       if (intervalId) window.clearInterval(intervalId);
+      if (confettiIntervalId) window.clearInterval(confettiIntervalId);
+      if (fireworkIntervalId) window.clearInterval(fireworkIntervalId);
       if (bgm) bgm.stop();
       if (app) app.destroy(true, true);
     };
-  }, [complete]);
+  }, []);
 
   return (
     <div
-      ref={containerRef}
       style={{
         width: "100vw",
         height: "100vh",
@@ -590,7 +578,42 @@ const FlowerGame: FC = () => {
         top: 0,
         left: 0,
       }}
-    />
+    >
+      <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+      {showContinueButton && (
+        <button
+          onClick={goToSlides}
+          style={{
+            position: "fixed",
+            bottom: "50px",
+            right: "50px",
+            padding: "20px 40px",
+            fontSize: "24px",
+            fontWeight: "bold",
+            background: "linear-gradient(135deg, #FF69B4, #FF1493)",
+            color: "white",
+            border: "none",
+            borderRadius: "50px",
+            cursor: "pointer",
+            boxShadow: "0 8px 20px rgba(255, 20, 147, 0.4)",
+            transition: "all 0.3s ease",
+            zIndex: 1000,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.1)";
+            e.currentTarget.style.boxShadow =
+              "0 12px 30px rgba(255, 20, 147, 0.6)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow =
+              "0 8px 20px rgba(255, 20, 147, 0.4)";
+          }}
+        >
+          Tiếp tục →
+        </button>
+      )}
+    </div>
   );
 };
 
