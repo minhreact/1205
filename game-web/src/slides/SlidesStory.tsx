@@ -94,13 +94,10 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>🌸</div>
-        <p style={textStyle}>
-          Anh, là một người chưa được bình thường
-          <br />
-          đang trên con đường tìm kiếm
-          <br />
-          một cuộc sống bình thường dành cho anh
-        </p>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Anh</h2>
+        <p style={textStyle}>Là một người chưa được bình thường</p>
+        <p style={textStyle}>Đang trên con đường tìm kiếm</p>
+        <p style={textStyle}>Một cuộc sống bình thường dành cho anh</p>
       </div>
 
       {/* Slide 3 - Gặp gỡ */}
@@ -113,11 +110,8 @@ const SlidesStory: FC = () => {
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>✨</div>
         <h2 style={{ ...headingStyle, fontSize: "42px" }}>Thật tình cờ...</h2>
-        <p style={textStyle}>
-          Trên con đường đó, hai ta lại gặp nhau
-          <br />
-          Cùng nhau tạo nên những kỷ niệm đẹp
-        </p>
+        <p style={textStyle}>Trên con đường đó, hai ta lại gặp nhau</p>
+        <p style={textStyle}>Cùng nhau tạo nên những kỷ niệm đẹp</p>
       </div>
 
       {/* Slide 4 - Cô gái đặc biệt */}
@@ -129,14 +123,10 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>💫</div>
-        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
-        <p style={textStyle}>
-          Luôn yêu đời, xinh đẹp, đáng yêu
-          <br />
-          Dám rủ anh, một người xa lạ
-          <br />
-          lên chuyến tàu di sản
-        </p>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Em, một cô gái</h2>
+        <p style={textStyle}>Luôn yêu đời, xinh đẹp, đáng yêu</p>
+        <p style={textStyle}>Dám rủ anh, một người xa lạ</p>
+        <p style={textStyle}>lên chuyến tàu di sản</p>
       </div>
 
       {/* Slide 5 - Ấn tượng */}
@@ -148,7 +138,7 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>🌟</div>
-        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Em, một cô gái</h2>
         <p style={textStyle}>Để lại ấn tượng sâu sắc cho anh</p>
       </div>
 
@@ -161,7 +151,7 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>💗</div>
-        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Em, một cô gái</h2>
         <p style={textStyle}>Khiến anh cười mỗi khi nhớ về</p>
       </div>
 
@@ -174,7 +164,7 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>🎀</div>
-        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Em, một cô gái</h2>
         <p style={textStyle}>
           Khiến cho anh cảm nhận được sự bình thường trong tình yêu đôi lứa
         </p>
