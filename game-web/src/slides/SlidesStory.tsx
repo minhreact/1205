@@ -139,7 +139,9 @@ const SlidesStory: FC = () => {
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>🌟</div>
         <h2 style={{ ...headingStyle, fontSize: "42px" }}>Em, một cô gái</h2>
-        <p style={textStyle}>Để lại ấn tượng sâu sắc cho anh</p>
+        <p style={textStyle}>
+          Để lại ấn tượng sâu sắc cho anh về sự thật thà, nhí nhảnh
+        </p>
       </div>
 
       {/* Slide 6 - Cảm xúc */}
