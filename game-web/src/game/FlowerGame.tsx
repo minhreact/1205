@@ -648,39 +648,87 @@ const FlowerGame: FC = () => {
           { x: 0, y: 40, targetY: 60 },
         ];
 
-        // ===== LAYER 1: Giấy gói tissue phía sau - cao và nhỏ hơn =====
-        const wrapperBack = new PIXI.Graphics();
+        // ===== LAYER 1: Chậu hoa đẹp - màu hồng pastel =====
+        const vase = new PIXI.Graphics();
 
-        // Shadow mềm
-        wrapperBack.ellipse(0, 180, 45, 10);
-        wrapperBack.fill({ color: 0x000000, alpha: 0.1 });
+        // Shadow mềm dưới chậu
+        vase.ellipse(0, 190, 40, 8);
+        vase.fill({ color: 0x000000, alpha: 0.15 });
 
-        // Lớp giấy tissue phía sau - cao và nhỏ hơn
-        // Phần bên trái
-        wrapperBack.moveTo(-55, 30);
-        wrapperBack.bezierCurveTo(-60, 70, -50, 140, -35, 180);
-        wrapperBack.lineTo(-20, 180);
-        wrapperBack.bezierCurveTo(-30, 120, -35, 60, -30, 30);
-        wrapperBack.closePath();
-        wrapperBack.fill({ color: 0xfce4ec, alpha: 0.85 });
+        // Thân chậu chính - dáng cổ điển
+        // Phần thân chậu gradient - màu hồng pastel
+        vase.moveTo(-35, 50);
+        vase.bezierCurveTo(-45, 80, -42, 140, -30, 185);
+        vase.lineTo(30, 185);
+        vase.bezierCurveTo(42, 140, 45, 80, 35, 50);
+        vase.closePath();
+        vase.fill(0xf8bbd9); // Màu hồng pastel
 
-        // Phần bên phải
-        wrapperBack.moveTo(55, 30);
-        wrapperBack.bezierCurveTo(60, 70, 50, 140, 35, 180);
-        wrapperBack.lineTo(20, 180);
-        wrapperBack.bezierCurveTo(30, 120, 35, 60, 30, 30);
-        wrapperBack.closePath();
-        wrapperBack.fill({ color: 0xfce4ec, alpha: 0.85 });
+        // Lớp gradient sáng bên trái
+        vase.moveTo(-33, 55);
+        vase.bezierCurveTo(-40, 80, -38, 130, -28, 180);
+        vase.lineTo(-15, 180);
+        vase.bezierCurveTo(-20, 130, -22, 80, -18, 55);
+        vase.closePath();
+        vase.fill({ color: 0xfce4ec, alpha: 0.7 });
 
-        // Phần giữa phía sau
-        wrapperBack.moveTo(-30, 35);
-        wrapperBack.bezierCurveTo(-25, 100, -18, 150, -10, 180);
-        wrapperBack.lineTo(10, 180);
-        wrapperBack.bezierCurveTo(18, 150, 25, 100, 30, 35);
-        wrapperBack.closePath();
-        wrapperBack.fill({ color: 0xf8bbd9, alpha: 0.7 });
+        // Lớp shadow bên phải
+        vase.moveTo(20, 55);
+        vase.bezierCurveTo(28, 80, 30, 130, 22, 180);
+        vase.lineTo(28, 180);
+        vase.bezierCurveTo(38, 130, 40, 80, 32, 55);
+        vase.closePath();
+        vase.fill({ color: 0xf48fb1, alpha: 0.5 });
 
-        bouquetContainer.addChild(wrapperBack);
+        // Miệng chậu
+        vase.ellipse(0, 50, 38, 10);
+        vase.fill(0xf48fb1);
+        vase.ellipse(0, 48, 32, 7);
+        vase.fill(0xc2185b); // Phần trong tối - hồng đậm
+
+        // Viền miệng chậu
+        vase.ellipse(0, 50, 38, 10);
+        vase.stroke({ width: 3, color: 0xec407a });
+
+        // Họa tiết trang trí trên chậu - hoa văn đơn giản
+        // Đường viền ngang
+        vase.moveTo(-40, 90);
+        vase.bezierCurveTo(-30, 88, 30, 88, 40, 90);
+        vase.stroke({ width: 2, color: 0xf06292 });
+
+        vase.moveTo(-38, 95);
+        vase.bezierCurveTo(-28, 93, 28, 93, 38, 95);
+        vase.stroke({ width: 1.5, color: 0xfce4ec });
+
+        // Họa tiết trái tim nhỏ ở giữa chậu
+        const heartX = 0;
+        const heartY = 120;
+        vase.moveTo(heartX, heartY + 6);
+        vase.bezierCurveTo(
+          heartX - 6,
+          heartY,
+          heartX - 6,
+          heartY - 6,
+          heartX,
+          heartY - 3
+        );
+        vase.bezierCurveTo(
+          heartX + 6,
+          heartY - 6,
+          heartX + 6,
+          heartY,
+          heartX,
+          heartY + 6
+        );
+        vase.fill(0xff6b8a);
+        vase.stroke({ width: 1, color: 0xff4d6d });
+
+        // Highlight sáng trên chậu
+        vase.moveTo(-25, 60);
+        vase.bezierCurveTo(-28, 80, -26, 100, -22, 120);
+        vase.stroke({ width: 3, color: 0xfff0f5, alpha: 0.5 });
+
+        bouquetContainer.addChild(vase);
 
         // ===== LAYER 2: Cọng hoa =====
         const stems = new PIXI.Graphics();
@@ -886,91 +934,6 @@ const FlowerGame: FC = () => {
         const eucalyptus2 = createEucalyptus(70, 20, 1);
         bouquetContainer.addChild(eucalyptus1);
         bouquetContainer.addChild(eucalyptus2);
-
-        // ===== LAYER CUỐI: Giấy gói tissue phía trước + Nơ - cao và nhỏ =====
-        const wrapperFront = new PIXI.Graphics();
-
-        // Lớp tissue chính phía trước - cao và nhỏ hơn
-        // Nếp gấp trái
-        wrapperFront.moveTo(-45, 40);
-        wrapperFront.bezierCurveTo(-55, 80, -45, 140, -30, 175);
-        wrapperFront.bezierCurveTo(-22, 140, -28, 80, -20, 45);
-        wrapperFront.closePath();
-        wrapperFront.fill({ color: 0xfce4ec, alpha: 0.9 });
-
-        // Nếp gấp giữa trái
-        wrapperFront.moveTo(-22, 42);
-        wrapperFront.bezierCurveTo(-28, 90, -22, 145, -12, 175);
-        wrapperFront.bezierCurveTo(-6, 130, -10, 80, -4, 45);
-        wrapperFront.closePath();
-        wrapperFront.fill({ color: 0xf8bbd9, alpha: 0.85 });
-
-        // Nếp gấp giữa phải
-        wrapperFront.moveTo(22, 42);
-        wrapperFront.bezierCurveTo(28, 90, 22, 145, 12, 175);
-        wrapperFront.bezierCurveTo(6, 130, 10, 80, 4, 45);
-        wrapperFront.closePath();
-        wrapperFront.fill({ color: 0xf8bbd9, alpha: 0.85 });
-
-        // Nếp gấp phải
-        wrapperFront.moveTo(45, 40);
-        wrapperFront.bezierCurveTo(55, 80, 45, 140, 30, 175);
-        wrapperFront.bezierCurveTo(22, 140, 28, 80, 20, 45);
-        wrapperFront.closePath();
-        wrapperFront.fill({ color: 0xfce4ec, alpha: 0.9 });
-
-        // Nếp gấp giữa
-        wrapperFront.moveTo(-6, 45);
-        wrapperFront.bezierCurveTo(-8, 100, -5, 150, 0, 175);
-        wrapperFront.bezierCurveTo(5, 150, 8, 100, 6, 45);
-        wrapperFront.closePath();
-        wrapperFront.fill({ color: 0xffc1e3, alpha: 0.8 });
-
-        bouquetContainer.addChild(wrapperFront);
-
-        // Nơ ribbon ở giữa - nhỏ hơn phù hợp với bình
-        const ribbon = new PIXI.Graphics();
-
-        // Cánh nơ trái - nhỏ hơn
-        ribbon.moveTo(0, 65);
-        ribbon.bezierCurveTo(-10, 58, -25, 62, -22, 70);
-        ribbon.bezierCurveTo(-25, 78, -10, 82, 0, 75);
-        ribbon.fill(0xff69b4);
-        ribbon.moveTo(0, 65);
-        ribbon.bezierCurveTo(-10, 58, -25, 62, -22, 70);
-        ribbon.bezierCurveTo(-25, 78, -10, 82, 0, 75);
-        ribbon.stroke({ width: 1, color: 0xff1493 });
-
-        // Cánh nơ phải
-        ribbon.moveTo(0, 65);
-        ribbon.bezierCurveTo(10, 58, 25, 62, 22, 70);
-        ribbon.bezierCurveTo(25, 78, 10, 82, 0, 75);
-        ribbon.fill(0xff69b4);
-        ribbon.moveTo(0, 65);
-        ribbon.bezierCurveTo(10, 58, 25, 62, 22, 70);
-        ribbon.bezierCurveTo(25, 78, 10, 82, 0, 75);
-        ribbon.stroke({ width: 1, color: 0xff1493 });
-
-        // Nút giữa nơ
-        ribbon.circle(0, 70, 6);
-        ribbon.fill(0xff1493);
-        ribbon.circle(0, 70, 6);
-        ribbon.stroke({ width: 1, color: 0xc71585 });
-
-        // Dải nơ rủ xuống - dài hơn
-        ribbon.moveTo(-4, 76);
-        ribbon.quadraticCurveTo(-12, 110, -8, 145);
-        ribbon.lineTo(-4, 143);
-        ribbon.quadraticCurveTo(-8, 105, -1, 78);
-        ribbon.fill(0xff69b4);
-
-        ribbon.moveTo(4, 76);
-        ribbon.quadraticCurveTo(12, 110, 8, 145);
-        ribbon.lineTo(4, 143);
-        ribbon.quadraticCurveTo(8, 105, 1, 78);
-        ribbon.fill(0xff69b4);
-
-        bouquetContainer.addChild(ribbon);
 
         // Đặt bouquet ở layer phù hợp
         app!.stage.addChild(bouquetContainer);

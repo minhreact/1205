@@ -129,13 +129,13 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>💫</div>
-        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Cô gái ấy</h2>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
         <p style={textStyle}>
-          Một cô gái luôn yêu đời, xinh đẹp, đáng yêu
+          Luôn yêu đời, xinh đẹp, đáng yêu
           <br />
-          Người dám rủ anh, một người xa lạ
+          Dám rủ anh, một người xa lạ
           <br />
-          lên một chuyến tàu di sản
+          lên chuyến tàu di sản
         </p>
       </div>
 
@@ -148,11 +148,8 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>🌟</div>
-        <p style={textStyle}>
-          Một cô gái để lại ấn tượng sâu sắc cho anh
-          <br />
-          về sự thật thà, nhí nhảnh
-        </p>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
+        <p style={textStyle}>Để lại ấn tượng sâu sắc cho anh</p>
       </div>
 
       {/* Slide 6 - Cảm xúc */}
@@ -164,11 +161,8 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>💗</div>
-        <p style={textStyle}>
-          Một cô gái khiến anh cười
-          <br />
-          mỗi khi nhớ về
-        </p>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
+        <p style={textStyle}>Khiến anh cười mỗi khi nhớ về</p>
       </div>
 
       {/* Slide 7 - Điều kỳ diệu */}
@@ -180,12 +174,9 @@ const SlidesStory: FC = () => {
         }}
       >
         <div style={{ fontSize: "70px", marginBottom: "30px" }}>🎀</div>
+        <h2 style={{ ...headingStyle, fontSize: "42px" }}>Một cô gái</h2>
         <p style={textStyle}>
-          Khiến cho một người chưa được bình thường như anh
-          <br />
-          cảm nhận được sự bình thường
-          <br />
-          trong tình yêu đôi lứa
+          Khiến cho anh cảm nhận được sự bình thường trong tình yêu đôi lứa
         </p>
       </div>
 
